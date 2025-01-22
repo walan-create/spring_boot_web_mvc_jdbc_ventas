@@ -5,16 +5,18 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
+
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Comercial {
+public class Pedido {
 
-	private int id;
-	private String nombre;
-	private String apellido1;
-	private String apellido2;
-	private float comision;
-	
+    private int id;
+    private double total;
+    private LocalDate fecha;
+    private int id_cliente;
+    private int id_comercial;
+
 }
