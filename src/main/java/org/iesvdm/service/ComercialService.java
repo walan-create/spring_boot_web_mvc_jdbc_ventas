@@ -1,7 +1,10 @@
 package org.iesvdm.service;
 
 import org.iesvdm.dao.ComercialDAO;
+import org.iesvdm.dao.PedidoDAO;
 import org.iesvdm.modelo.Comercial;
+import org.iesvdm.modelo.Pedido;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,6 +15,9 @@ public class ComercialService {
 
     private ComercialDAO comercialDAO;
 
+    @Autowired
+    private PedidoDAO pedidoDAO;
+
     // Se utiliza inyección automática por constructor del framework Spring.
     // Por tanto, se puede omitir la anotación Autowired
     // @Autowired
@@ -19,8 +25,13 @@ public class ComercialService {
         this.comercialDAO = comercialDAO;
     }
 
+
     public List<Comercial> listAll() {
         return comercialDAO.getAll();
+    }
+
+    public List<Pedido> listAllPedidos() {
+        return pedidoDAO.getAll();
     }
 
     public Comercial one(Integer id) {
