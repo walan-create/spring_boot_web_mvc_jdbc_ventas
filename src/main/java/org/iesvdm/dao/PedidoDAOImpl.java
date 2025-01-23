@@ -2,6 +2,7 @@ package org.iesvdm.dao;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.iesvdm.dto.PedidoDTO;
 import org.iesvdm.modelo.Comercial;
 import org.iesvdm.modelo.Pedido;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,6 +65,57 @@ public class PedidoDAOImpl implements PedidoDAO{
                 .list();
 
     }
+
+    @Override
+    public List<Pedido> getAllByComercialId(int id) {
+
+        String query = """
+                SELECT * FROM pedido WHERE id_comercial = :id
+                """;
+
+        RowMapper<Pedido> rowMapperPedido = (rs, rowNum) -> new Pedido(
+                rs.getInt("id"),
+                rs.getDouble("total"),
+                rs.getDate("fecha"),
+                rs.getInt("id_cliente"),
+                rs.getInt("id_comercial")
+        );
+
+        return jdbcClient.sql(query)
+                .param("id",id)
+                .query(rowMapperPedido)
+                .list();
+
+    }
+
+    @Override
+    public List<PedidoDTO> getAllDTOByComercialId(int id_comercial) {
+
+        String query = """
+            SELECT p.id, p.total, p.fecha, p.id_cliente, p.id_comercial, 
+                   c.nombre AS nombreCliente, com.nombre AS nombreComercial
+            FROM pedido p
+            JOIN cliente c ON p.id_cliente = c.id
+            JOIN comercial com ON p.id_comercial = com.id
+            WHERE p.id_comercial = :id_comercial
+            """;
+
+        RowMapper<PedidoDTO> rowMapperPedidoDTO = (rs, rowNum) -> PedidoDTO.builder()
+                .id(rs.getInt("id"))
+                .total(rs.getDouble("total"))
+                .fecha(rs.getDate("fecha"))
+                .id_cliente(rs.getInt("id_cliente"))
+                .id_comercial(rs.getInt("id_comercial"))
+                .nombreCliente(rs.getString("nombreCliente"))
+                .nombreComercial(rs.getString("nombreComercial"))
+                .build();
+
+        return jdbcClient.sql(query)
+                .param("id_comercial", id_comercial)
+                .query(rowMapperPedidoDTO)
+                .list();
+    }
+
 
     @Override
     public Optional<Pedido> find(int id) {

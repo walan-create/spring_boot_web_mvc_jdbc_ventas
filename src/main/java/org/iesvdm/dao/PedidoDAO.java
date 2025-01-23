@@ -3,6 +3,7 @@ package org.iesvdm.dao;
 import java.util.List;
 import java.util.Optional;
 
+import org.iesvdm.dto.PedidoDTO;
 import org.iesvdm.modelo.Pedido;
 
 public interface PedidoDAO {
@@ -11,7 +12,11 @@ public interface PedidoDAO {
 
     public List<Pedido> getAll();
 
-    public Optional<Pedido> find(int id);
+    public List<Pedido> getAllByComercialId(int id);
+
+    public List<PedidoDTO> getAllDTOByComercialId(int id);
+
+        public Optional<Pedido> find(int id);
 
     public void update(Pedido pedido);
 

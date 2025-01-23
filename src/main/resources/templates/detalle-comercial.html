@@ -54,7 +54,8 @@
             <p>ID: <span th:text="${pedido.id}"></span></p>
             <p>TOTAL: <span th:text="${pedido.total}"></span></p>
             <p>FECHA: <span th:text="${pedido.fecha}"></span></p>
-            <p>CLIENTE: <a th:href="@{/clientes/{id}(id=${pedido.id_cliente})}" target="_blank" th:text="${pedido.id_cliente}"></a></p>
+            <p>COMERCIAL: <span th:text="${pedido.id_comercial}"></span></p>
+            <p>CLIENTE: <a th:href="@{/clientes/{id}(id=${pedido.id_cliente})}" target="_blank" th:text="${pedido.getNombreCliente()}"></a></p>
         </li>
     </ul>
 </div>
