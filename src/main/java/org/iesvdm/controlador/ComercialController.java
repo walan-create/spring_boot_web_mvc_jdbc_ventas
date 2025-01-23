@@ -1,8 +1,11 @@
 package org.iesvdm.controlador;
 
+import org.iesvdm.modelo.Cliente;
 import org.iesvdm.modelo.Comercial;
 import org.iesvdm.modelo.Pedido;
+import org.iesvdm.service.ClienteService;
 import org.iesvdm.service.ComercialService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,6 +21,8 @@ public class ComercialController {
 
     private ComercialService comercialService;
 
+    @Autowired
+    private ClienteService clienteService;
     //Se utiliza inyección automática por constructor del framework Spring.
     //Por tanto, se puede omitir la anotación Autowired
     //@Autowired
@@ -38,8 +43,10 @@ public class ComercialController {
     @GetMapping("/comerciales/{id}")
     public String detalle(Model model, @PathVariable Integer id) {
 
+        Cliente cliente = clienteService.one(id);
         Comercial comercial = comercialService.one(id);
         List<Pedido> pedidos = comercialService.listAllPedidos();
+        model.addAttribute("cliente", cliente);
         model.addAttribute("comercial", comercial);
         model.addAttribute("pedidos", pedidos);
 
