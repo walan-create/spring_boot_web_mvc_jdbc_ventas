@@ -6,6 +6,8 @@ import org.iesvdm.dto.PedidoDTO;
 import org.iesvdm.modelo.Comercial;
 import org.iesvdm.modelo.Pedido;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -24,6 +26,8 @@ public class PedidoDAOImpl implements PedidoDAO{
 
     @Autowired
     JdbcClient jdbcClient;
+    @Autowired
+    JdbcTemplate jdbcTemplate;
 
     @Override
     public void create(Pedido pedido) {
@@ -91,29 +95,49 @@ public class PedidoDAOImpl implements PedidoDAO{
     @Override
     public List<PedidoDTO> getAllDTOByComercialId(int id_comercial) {
 
+//        String query = """
+//            SELECT p.*, c.nombre AS nombreCliente, com.nombre AS nombreComercial
+//            FROM pedido p
+//            JOIN cliente c ON p.id_cliente = c.id
+//            JOIN comercial com ON p.id_comercial = com.id
+//            WHERE p.id_comercial = :id_comercial
+//            """;
+//
+//        RowMapper<PedidoDTO> rowMapperPedidoDTO = (rs, rowNum) -> PedidoDTO.builder()
+//                .id(rs.getInt("id"))
+//                .total(rs.getDouble("total"))
+//                .fecha(rs.getDate("fecha"))
+//                .id_cliente(rs.getInt("id_cliente"))
+//                .id_comercial(rs.getInt("id_comercial"))
+//                .nombreCliente(rs.getString("nombreCliente"))
+//                .nombreComercial(rs.getString("nombreComercial"))
+//                .build();
+//
+//        return jdbcClient.sql(query)
+//                .param("id_comercial", id_comercial)
+//                .query(rowMapperPedidoDTO)
+//                .list();
+
+        // Definir el query
         String query = """
-            SELECT p.id, p.total, p.fecha, p.id_cliente, p.id_comercial, 
-                   c.nombre AS nombreCliente, com.nombre AS nombreComercial
+            SELECT p.*, c.nombre AS nombreCliente, com.nombre AS nombreComercial
             FROM pedido p
             JOIN cliente c ON p.id_cliente = c.id
             JOIN comercial com ON p.id_comercial = com.id
-            WHERE p.id_comercial = :id_comercial
+            WHERE p.id_comercial = ?
             """;
 
-        RowMapper<PedidoDTO> rowMapperPedidoDTO = (rs, rowNum) -> PedidoDTO.builder()
-                .id(rs.getInt("id"))
-                .total(rs.getDouble("total"))
-                .fecha(rs.getDate("fecha"))
-                .id_cliente(rs.getInt("id_cliente"))
-                .id_comercial(rs.getInt("id_comercial"))
-                .nombreCliente(rs.getString("nombreCliente"))
-                .nombreComercial(rs.getString("nombreComercial"))
-                .build();
+        // Crear un RowMapper
+        BeanPropertyRowMapper<PedidoDTO> rowMapper = new BeanPropertyRowMapper<>(PedidoDTO.class);
 
-        return jdbcClient.sql(query)
-                .param("id_comercial", id_comercial)
-                .query(rowMapperPedidoDTO)
+        // Ejecutar el query usando jdbcClient
+        List<PedidoDTO> pedidoDTOList = jdbcClient.sql(query)
+                .param(id_comercial)
+                .query(rowMapper)
                 .list();
+
+        return pedidoDTOList;
+
     }
 
 
