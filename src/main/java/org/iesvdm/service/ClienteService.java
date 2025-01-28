@@ -4,13 +4,19 @@ import java.util.List;
 import java.util.Optional;
 
 import org.iesvdm.dao.ClienteDAO;
+import org.iesvdm.dao.PedidoDAO;
+import org.iesvdm.dto.PedidoDTO;
 import org.iesvdm.modelo.Cliente;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class ClienteService {
 	
 	private ClienteDAO clienteDAO;
+
+	@Autowired
+	PedidoDAO pedidoDAO;
 	
 	//Se utiliza inyección automática por constructor del framework Spring.
 	//Por tanto, se puede omitir la anotación Autowired
@@ -46,6 +52,14 @@ public class ClienteService {
 
 		clienteDAO.delete(id);
 
+	}
+
+	public double getSumTotalPedidos (int id){
+		List<PedidoDTO> pedidoDTOList = pedidoDAO.getAllDTOByClienteId(id);
+
+        return pedidoDTOList.stream()
+                .mapToDouble(t -> t.getTotal())
+                .sum();
 	}
 	
 	

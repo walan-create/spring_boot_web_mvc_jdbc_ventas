@@ -3,15 +3,12 @@ package org.iesvdm.dao;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.iesvdm.dto.PedidoDTO;
-import org.iesvdm.modelo.Comercial;
 import org.iesvdm.modelo.Pedido;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.simple.JdbcClient;
-import org.springframework.jdbc.support.GeneratedKeyHolder;
-import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -140,6 +137,30 @@ public class PedidoDAOImpl implements PedidoDAO{
 
     }
 
+    @Override
+    public List<PedidoDTO> getAllDTOByClienteId(int id_cliente) {
+
+        // Definir el query
+        String query = """
+            SELECT p.*, c.nombre AS nombreCliente, com.nombre AS nombreComercial
+            FROM pedido p
+            JOIN cliente c ON p.id_cliente = c.id
+            JOIN comercial com ON p.id_comercial = com.id
+            WHERE p.id_cliente = ?
+            """;
+
+        // Crear un RowMapper
+        BeanPropertyRowMapper<PedidoDTO> rowMapper = new BeanPropertyRowMapper<>(PedidoDTO.class);
+
+        // Ejecutar el query usando jdbcClient
+        List<PedidoDTO> pedidoDTOList = jdbcClient.sql(query)
+                .param(id_cliente)
+                .query(rowMapper)
+                .list();
+
+        return pedidoDTOList;
+
+    }
 
     @Override
     public Optional<Pedido> find(int id) {

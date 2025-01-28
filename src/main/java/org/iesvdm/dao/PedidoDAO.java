@@ -16,7 +16,9 @@ public interface PedidoDAO {
 
     public List<PedidoDTO> getAllDTOByComercialId(int id);
 
-        public Optional<Pedido> find(int id);
+    List<PedidoDTO> getAllDTOByClienteId(int id_cliente);
+
+    public Optional<Pedido> find(int id);
 
     public void update(Pedido pedido);
 
