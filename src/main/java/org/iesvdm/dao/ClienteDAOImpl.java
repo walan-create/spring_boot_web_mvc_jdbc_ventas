@@ -5,8 +5,11 @@ import java.util.List;
 import java.util.Optional;
 
 import org.iesvdm.modelo.Cliente;
+import org.iesvdm.modelo.Comercial;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
@@ -23,6 +26,8 @@ public class ClienteDAOImpl implements ClienteDAO {
 	//Plantilla jdbc inyectada automáticamente por el framework Spring, gracias a la anotación @Autowired.
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
+	@Autowired
+	private JdbcClient jdbcClient;
 
 	/**
 	 * Inserta en base de datos el nuevo Cliente, actualizando el id en el bean Cliente.
@@ -147,6 +152,44 @@ public class ClienteDAOImpl implements ClienteDAO {
 		log.info("Delete de Cliente con {} registros eliminados.", rows);
 
 
+	}
+
+	@Override
+	public List<Comercial> getComercialesById(int id) {
+
+		// Definir el query
+		String query = """
+			SELECT com.*
+			FROM Comercial com
+			JOIN Pedido p ON com.id = p.id_comercial
+			WHERE p.id_cliente = ?
+			""";
+
+		// Crear un RowMapper
+		BeanPropertyRowMapper<Comercial> rowMapper = new BeanPropertyRowMapper<>(Comercial.class);
+
+		return jdbcClient.sql(query)
+				.param(id)
+				.query(rowMapper)
+				.list();
+	}
+
+	@Override
+	public Integer getPedidosEnComun(int id_cliente, int id_comercial) {
+
+		// Definir el query
+		String query = """
+			SELECT count(*)
+			FROM Comercial com
+			JOIN Pedido p ON com.id = p.id_comercial
+			WHERE p.id_cliente = ? AND p.id_comercial = ?
+			""";
+
+		return jdbcClient.sql(query)
+							.param(id_cliente)
+							.param(id_comercial)
+							.query(Integer.class)
+							.single();
 	}
 
 }

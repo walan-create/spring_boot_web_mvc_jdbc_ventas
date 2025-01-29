@@ -14,6 +14,8 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.Optional;
 
+import static java.lang.System.out;
+
 //Anotación lombok para logging (traza) de la aplicación
 @Slf4j
 @Repository
@@ -175,5 +177,31 @@ public class PedidoDAOImpl implements PedidoDAO{
     @Override
     public void delete(long id) {
 
+    }
+
+    @Override
+    public int contarPedidosEnPeriodo(int id_comercial, int id_cliente, int meses) {
+        // Definir el query
+        String query = """
+               SELECT COUNT(*)
+               FROM pedido
+               WHERE id_cliente = ?
+               AND id_comercial = ?
+               AND fecha >= CURDATE() - INTERVAL ? MONTH
+			""";
+
+        System.out.println(jdbcClient.sql(query)
+                .param(id_cliente)
+                .param(id_comercial)
+                .param(meses)
+                .query(Integer.class)
+                .single());;
+
+        return jdbcClient.sql(query)
+                .param(id_cliente)
+                .param(id_comercial)
+                .param(meses)
+                .query(Integer.class)
+                .single();
     }
 }

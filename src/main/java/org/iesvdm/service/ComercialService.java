@@ -3,6 +3,7 @@ package org.iesvdm.service;
 import org.iesvdm.dao.ComercialDAO;
 import org.iesvdm.dao.PedidoDAO;
 import org.iesvdm.dto.ComercialDTO;
+import org.iesvdm.dto.ComercialDTO2;
 import org.iesvdm.dto.PedidoDTO;
 import org.iesvdm.modelo.Comercial;
 import org.iesvdm.modelo.Pedido;
@@ -36,19 +37,20 @@ public class ComercialService {
 
         //Total de totales de pedidos
         double total = pedidoDTOList.stream()
-                .mapToDouble( p -> p.getTotal())
+                .mapToDouble(PedidoDTO::getTotal)
                 .sum();
-
+        //Maximo
         OptionalDouble totalMax = pedidoDTOList.stream()
-                .mapToDouble( p -> p.getTotal())
+                .mapToDouble(PedidoDTO::getTotal)
                 .max();
-
+        //Minimo
         OptionalDouble totalMin = pedidoDTOList.stream()
-                .mapToDouble( p -> p.getTotal())
+                .mapToDouble(PedidoDTO::getTotal)
                 .min();
-
+        //Sacamos Media
         int cantidadPedidos = pedidoDTOList.size();
         double media = total/cantidadPedidos;
+        //
 
         ComercialDTO comercialDTO = ComercialDTO.builder()
                 .comercial(comercial)

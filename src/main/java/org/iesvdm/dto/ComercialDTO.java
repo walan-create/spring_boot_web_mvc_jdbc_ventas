@@ -19,4 +19,5 @@ public class ComercialDTO {
     double totalMax;
     double totalMin;
 
+
 }

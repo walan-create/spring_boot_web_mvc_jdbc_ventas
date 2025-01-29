@@ -2,6 +2,7 @@ package org.iesvdm.controlador;
 
 import java.util.List;
 
+import org.iesvdm.dto.ComercialDTO2;
 import org.iesvdm.modelo.Cliente;
 import org.iesvdm.service.ClienteService;
 import org.springframework.stereotype.Controller;
@@ -40,6 +41,13 @@ public class ClienteController {
 
 		Cliente cliente = clienteService.one(id);
 		model.addAttribute("cliente", cliente);
+
+		List<ComercialDTO2> comercialDTOList = clienteService.getComercialesDTOAsociados(id);
+		model.addAttribute("comerciales",comercialDTOList);
+		System.out.println("Comerciales encontrados: " + comercialDTOList.size()); // 🔎 Ver cuántos hay
+		for (ComercialDTO2 c : comercialDTOList) {
+			System.out.println("Nombre: " + c.getNombre());
+		}
 
 		return "detalle-cliente";
 	}
