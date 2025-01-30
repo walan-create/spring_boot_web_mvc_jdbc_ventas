@@ -70,14 +70,18 @@ public class ComercialDAOImpl implements ComercialDAO {
 	@Override
 	public Optional<Comercial> find(int id) {
 
-		Optional<Comercial> optCom = jdbcClient.sql("""
-													SELECT * FROM comercial WHERE id = :id
-													""")
-				.param("id",id)
-				.query(Comercial.class)
+		Optional<Comercial> comercial = jdbcClient.sql("""
+                            SELECT * FROM comercial WHERE id = ?
+                           """)
+				.param(id)
+				.query((rs, rowNum) -> new Comercial(
+						rs.getInt("id"),
+						rs.getString("nombre"),
+						rs.getString("apellido1"),
+						rs.getString("apellido2"),
+						rs.getFloat("comisión")))
 				.optional();
-
-		return optCom;
+		return comercial;
 	}
 
 	@Override
