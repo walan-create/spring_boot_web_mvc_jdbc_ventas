@@ -1,5 +1,6 @@
 package org.iesvdm.controlador;
 
+import jakarta.validation.Valid;
 import org.iesvdm.dto.ComercialDTO;
 import org.iesvdm.dto.PedidoDTO;
 import org.iesvdm.modelo.Cliente;
@@ -10,6 +11,7 @@ import org.iesvdm.service.ComercialService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -79,8 +81,6 @@ public class ComercialController {
         return "detalle-comercial";
     }
 
-
-
     @GetMapping("/comerciales/crear") //Al no tener ruta base para el controlador, cada método tiene que tener la ruta completa
     public String crear(@ModelAttribute("comercial") Comercial comercial) {
 
@@ -88,10 +88,13 @@ public class ComercialController {
     }
 
     @PostMapping("/comerciales/crear")
-    public RedirectView submitCrear(@ModelAttribute("comercial") Comercial comercial) {
+    public String submitCrear(@Valid @ModelAttribute("comercial") Comercial comercial, BindingResult bindingResult) {
 
+        if (bindingResult.hasErrors()){
+            return "crear-comercial";
+        }
         comercialService.newComercial(comercial);
-        return new RedirectView("/comerciales") ;
+        return "redirect:/comerciales";
     }
 
     @GetMapping("/comerciales/editar/{id}")
@@ -101,16 +104,19 @@ public class ComercialController {
         model.addAttribute("comercial", comercial);
 
         return "editar-comercial";
-
     }
 
     @PostMapping("/comerciales/editar/{id}")
-    public RedirectView submitEditar(@ModelAttribute("comercial") Comercial comercial) {
+    public String submitEditar(@Valid @ModelAttribute("comercial") Comercial comercial, BindingResult bindingResult) {
 
+        if (bindingResult.hasErrors()) {
+            return "editar-comercial";
+        }
         comercialService.replaceComercial(comercial);
 
-        return new RedirectView("/comerciales");
+        return "redirect:/comerciales";
     }
+
 
     @PostMapping("/comerciales/borrar/{id}")
     public RedirectView submitBorrar(@PathVariable Integer id) {

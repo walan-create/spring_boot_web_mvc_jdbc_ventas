@@ -51,33 +51,30 @@ public class ComercialDAOImpl implements ComercialDAO {
 
 	@Override
 	public List<Comercial> getAll() {
-		
+
 		List<Comercial> listComercial = jdbcTemplate.query(
-                "SELECT * FROM comercial",
-                (rs, rowNum) -> new Comercial(rs.getInt("id"), 
-                							  rs.getString("nombre"), 
-                							  rs.getString("apellido1"),
-                							  rs.getString("apellido2"), 
-                							  rs.getFloat("comisión"))
-                						 	
-        );
-		
+				"SELECT * FROM comercial",
+				(rs, rowNum) -> new Comercial(rs.getInt("id"),
+						rs.getString("nombre"),
+						rs.getString("apellido1"),
+						rs.getString("apellido2"),
+						rs.getBigDecimal("comisión"))
+
+		);
+
 		log.info("Devueltos {} registros.", listComercial.size());
-		
-        return listComercial;
+		return listComercial;
 	}
 
 	@Override
 	public Optional<Comercial> find(int id) {
 
-		Optional<Comercial> optCom = jdbcClient.sql("""
-													SELECT * FROM comercial WHERE id = :id
-													""")
-				.param("id",id)
-				.query(Comercial.class)
-				.optional();
-
-		return optCom;
+        return jdbcClient.sql("""
+                              SELECT * FROM comercial WHERE id = ?
+                             """)
+                .param(id)
+                .query(Comercial.class)
+                .optional();
 	}
 
 	@Override
@@ -90,8 +87,7 @@ public class ComercialDAOImpl implements ComercialDAO {
 				apellido1 = :apellido1,
                 apellido2 = :apellido2,
 				comisión = :comision
-                WHERE
-                id = :id
+                WHERE id = :id
                 """;
 		int rowsUpdated = jdbcClient.sql(query)
 				.paramSource(comercial)
@@ -106,20 +102,20 @@ public class ComercialDAOImpl implements ComercialDAO {
 
 		//Borramos todos los pedidos que coincidan con el id de comercial
 		String queryEliminacionCascada = """
-                DELETE FROM pedido WHERE id_comercial = :id
+                DELETE FROM pedido WHERE id_comercial = ?
                 """;
 		int rowsDeleted1 = jdbcClient.sql(queryEliminacionCascada)
-				.param("id",id)
+				.param(id)
 				.update();
 
 		log.info("Borrados {} registros",rowsDeleted1);
 
 		//Borramos el comercial
 		String query = """
-                DELETE FROM comercial WHERE id = :id
+                DELETE FROM comercial WHERE id = ?
                 """;
 		int rowsDeleted2 = jdbcClient.sql(query)
-				.param("id",id)
+				.param(id)
 				.update();
 
 		log.info("Borrados {} registros",rowsDeleted2);

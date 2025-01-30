@@ -26,14 +26,14 @@ public class Cliente {
 
 	private int id;
 
-	@Size(max = 30, message = "Nombre como máximo de {max} caracteres.")
+	@Size(max = 30, message = "{error.nombre.size.max}")
 	private String nombre;
 
 	@NotBlank
-	@Size(max = 30, message = "Nombre como máximo de {max} caracteres.")
+	@Size(max = 30, message = "Apellido 1 como máximo de {max} caracteres.")
 	private String apellido1;
 
-	@Size(max = 30, message = "Nombre como máximo de {max} caracteres.")
+	@Size(max = 30, message = "Apellido 2 como máximo de {max} caracteres.")
 	private String apellido2;
 
 	@NotBlank

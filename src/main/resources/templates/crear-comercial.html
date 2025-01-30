@@ -16,10 +16,16 @@
         <div class="mb-3">
             <label class="form-label text-white" th:text="#{msg.nombre}"></label>
             <input type="text" th:field="*{nombre}" class="form-control" />
+            <ul th:if="${#fields.hasErrors('nombre')}" class="list-unstyled mt-2">
+                <li th:each="err : ${#fields.errors('nombre')}" th:text="${err}" class="alert alert-danger" />
+            </ul>
         </div>
         <div class="mb-3">
             <label class="form-label text-white" th:text="#{msg.apellido1}"></label>
             <input type="text" th:field="*{apellido1}" class="form-control" />
+            <ul th:if="${#fields.hasErrors('apellido1')}" class="list-unstyled mt-2">
+                <li th:each="err : ${#fields.errors('apellido1')}" th:text="${err}" class="alert alert-danger" />
+            </ul>
         </div>
         <div class="mb-3">
             <label class="form-label text-white" th:text="#{msg.apellido2}"></label>
@@ -27,7 +33,7 @@
         </div>
         <div class="mb-3">
             <label class="form-label text-white" th:text="#{msg.comision}"></label>
-            <input type="number" th:field="*{comision}" class="form-control" />
+            <input type="number" step="0.001" th:field="*{comision}" class="form-control" />
         </div>
     </form>
 </div>

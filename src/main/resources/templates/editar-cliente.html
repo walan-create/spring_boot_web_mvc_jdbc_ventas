@@ -18,24 +18,36 @@
             <input type="text" th:field="*{id}" class="form-control" readonly="readonly"/>
         </div>
         <div class="mb-3">
-            <label class="form-label text-white" th:text="#{msg.nombre}">Nombre</label>
-            <input type="text" th:field="*{nombre}" class="form-control"/>
+            <label class="form-label text-white" th:text="#{msg.nombre}"></label>
+            <input type="text" th:field="*{nombre}" class="form-control" />
+            <ul th:if="${#fields.hasErrors('nombre')}">
+                <li th:each="err : ${#fields.errors('nombre')}" th:text="${err}" class="alert alert-danger" />
+            </ul>
         </div>
         <div class="mb-3">
-            <label class="form-label text-white" th:text="#{msg.apellido1}">Apellido 1</label>
-            <input type="text" th:field="*{apellido1}" class="form-control"/>
+            <label class="form-label text-white" th:text="#{msg.apellido1}"></label>
+            <input type="text" th:field="*{apellido1}" class="form-control" />
+            <ul th:if="${#fields.hasErrors('apellido1')}" class="list-unstyled mt-2">
+                <li th:each="err : ${#fields.errors('apellido1')}" th:text="${err}" class="alert alert-danger" />
+            </ul>
         </div>
         <div class="mb-3">
-            <label class="form-label text-white" th:text="#{msg.apellido2}">Apellido 2</label>
-            <input type="text" th:field="*{apellido2}" class="form-control"/>
+            <label class="form-label text-white" th:text="#{msg.apellido2}"></label>
+            <input type="text" th:field="*{apellido2}" class="form-control" />
         </div>
         <div class="mb-3">
-            <label class="form-label text-white" th:text="#{msg.ciudad}">Ciudad</label>
-            <input type="text" th:field="*{ciudad}" class="form-control"/>
+            <label class="form-label text-white" th:text="#{msg.ciudad}"></label>
+            <input type="text" th:field="*{ciudad}" class="form-control" />
+            <ul th:if="${#fields.hasErrors('ciudad')}" class="list-unstyled mt-2">
+                <li th:each="err : ${#fields.errors('ciudad')}" th:text="${err}" class="alert alert-danger" />
+            </ul>
         </div>
         <div class="mb-3">
-            <label class="form-label text-white" th:text="#{msg.categoria}">Categoría</label>
-            <input type="text" th:field="*{categoria}" class="form-control"/>
+            <label class="form-label text-white" th:text="#{msg.categoria}"></label>
+            <input type="text" th:field="*{categoria}" class="form-control" />
+            <ul th:if="${#fields.hasErrors('categoria')}" class="list-unstyled mt-2">
+                <li th:each="err : ${#fields.errors('categoria')}" th:text="${err}" class="alert alert-danger" />
+            </ul>
         </div>
     </form>
 </div>
