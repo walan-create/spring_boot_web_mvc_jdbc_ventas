@@ -160,8 +160,8 @@ public class ClienteDAOImpl implements ClienteDAO {
 		// Definir el query
 		String query = """
 			SELECT com.*
-			FROM Comercial com
-			JOIN Pedido p ON com.id = p.id_comercial
+			FROM comercial com
+			JOIN pedido p ON com.id = p.id_comercial
 			WHERE p.id_cliente = ?
 			""";
 
@@ -180,8 +180,8 @@ public class ClienteDAOImpl implements ClienteDAO {
 		// Definir el query
 		String query = """
 			SELECT count(*)
-			FROM Comercial com
-			JOIN Pedido p ON com.id = p.id_comercial
+			FROM comercial com
+			JOIN pedido p ON com.id = p.id_comercial
 			WHERE p.id_cliente = ? AND p.id_comercial = ?
 			""";
 

@@ -190,13 +190,6 @@ public class PedidoDAOImpl implements PedidoDAO{
                AND fecha >= CURDATE() - INTERVAL ? MONTH
 			""";
 
-        System.out.println(jdbcClient.sql(query)
-                .param(id_cliente)
-                .param(id_comercial)
-                .param(meses)
-                .query(Integer.class)
-                .single());;
-
         return jdbcClient.sql(query)
                 .param(id_cliente)
                 .param(id_comercial)
