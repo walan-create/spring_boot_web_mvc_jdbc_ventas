@@ -1,8 +1,6 @@
 package org.iesvdm.modelo;
 
-import jakarta.validation.constraints.DecimalMax;
-import jakarta.validation.constraints.DecimalMin;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -31,5 +29,6 @@ public class Comercial {
 	@DecimalMin(value="0.276", message="La comisión debe de ser al menos {value}")
 	@DecimalMax(value="0.946", message="La comisión no puede ser mayor que {value}")
 	private BigDecimal comision;
-	
+
+
 }

@@ -8,7 +8,9 @@ CREATE TABLE cliente (
                          apellido1 VARCHAR(100) NOT NULL,
                          apellido2 VARCHAR(100),
                          ciudad VARCHAR(100),
-                         categoría INT UNSIGNED
+                         categoría INT UNSIGNED,
+                         correo VARCHAR(100)
+
 );
 
 CREATE TABLE comercial (
@@ -16,7 +18,8 @@ CREATE TABLE comercial (
                            nombre VARCHAR(100) NOT NULL,
                            apellido1 VARCHAR(100) NOT NULL,
                            apellido2 VARCHAR(100),
-                           comisión FLOAT
+                           comisión FLOAT,
+                           correo VARCHAR(100)
 );
 
 CREATE TABLE pedido (
@@ -40,14 +43,14 @@ INSERT INTO cliente VALUES(8, 'Pepe', 'Ruiz', 'Santana', 'Huelva', 200);
 INSERT INTO cliente VALUES(9, 'Guillermo', 'López', 'Gómez', 'Granada', 225);
 INSERT INTO cliente VALUES(10, 'Daniel', 'Santana', 'Loyola', 'Sevilla', 125);
 
-INSERT INTO comercial VALUES(1, 'Daniel', 'Sáez', 'Vega', 0.15);
-INSERT INTO comercial VALUES(2, 'Juan', 'Gómez', 'López', 0.13);
-INSERT INTO comercial VALUES(3, 'Diego','Flores', 'Salas', 0.11);
-INSERT INTO comercial VALUES(4, 'Marta','Herrera', 'Gil', 0.14);
-INSERT INTO comercial VALUES(5, 'Antonio','Carretero', 'Ortega', 0.12);
-INSERT INTO comercial VALUES(6, 'Manuel','Domínguez', 'Hernández', 0.13);
-INSERT INTO comercial VALUES(7, 'Antonio','Vega', 'Hernández', 0.11);
-INSERT INTO comercial VALUES(8, 'Alfredo','Ruiz', 'Flores', 0.05);
+INSERT INTO comercial VALUES(1, 'Daniel', 'Sáez', 'Vega', 0.15, 'daniel.saez@empresa.com');
+INSERT INTO comercial VALUES(2, 'Juan', 'Gómez', 'López', 0.13, 'juan.gomez@empresa.com');
+INSERT INTO comercial VALUES(3, 'Diego', 'Flores', 'Salas', 0.11, 'diego.flores@empresa.com');
+INSERT INTO comercial VALUES(4, 'Marta', 'Herrera', 'Gil', 0.14, 'marta.herrera@empresa.com');
+INSERT INTO comercial VALUES(5, 'Antonio', 'Carretero', 'Ortega', 0.12, 'antonio.carretero@empresa.com');
+INSERT INTO comercial VALUES(6, 'Manuel', 'Domínguez', 'Hernández', 0.13, 'manuel.dominguez@empresa.com');
+INSERT INTO comercial VALUES(7, 'Antonio', 'Vega', 'Hernández', 0.11, 'antonio.vega@empresa.com');
+INSERT INTO comercial VALUES(8, 'Alfredo', 'Ruiz', 'Flores', 0.05, 'alfredo.ruiz@empresa.com');
 
 INSERT INTO pedido VALUES(1, 150.5, '2017-10-05', 5, 2);
 INSERT INTO pedido VALUES(2, 270.65, '2016-09-10', 1, 5);

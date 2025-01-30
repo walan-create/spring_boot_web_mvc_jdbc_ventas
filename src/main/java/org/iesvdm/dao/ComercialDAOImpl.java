@@ -59,7 +59,6 @@ public class ComercialDAOImpl implements ComercialDAO {
 						rs.getString("apellido1"),
 						rs.getString("apellido2"),
 						rs.getBigDecimal("comisión"))
-
 		);
 
 		log.info("Devueltos {} registros.", listComercial.size());
@@ -69,12 +68,26 @@ public class ComercialDAOImpl implements ComercialDAO {
 	@Override
 	public Optional<Comercial> find(int id) {
 
-        return jdbcClient.sql("""
-                              SELECT * FROM comercial WHERE id = ?
-                             """)
-                .param(id)
-                .query(Comercial.class)
-                .optional();
+		//Esto es para cuando el tpo de los atributos coincide con el de la BD, con BigDecimal no se puede usar
+//		Optional<Comercial> comercial = jdbcClient.sql("""
+//                              SELECT * FROM comercial WHERE id = ?
+//                             """)
+//				.param(id)
+//				.query(Comercial.class)
+//				.optional();
+
+		Optional<Comercial> comercial = jdbcClient.sql("""
+                            SELECT * FROM comercial WHERE id = ?
+                           """)
+				.param(id)
+				.query((rs, rowNum) -> new Comercial(
+						rs.getInt("id"),
+						rs.getString("nombre"),
+						rs.getString("apellido1"),
+						rs.getString("apellido2"),
+						rs.getBigDecimal("comisión")))
+				.optional();
+		return comercial;
 	}
 
 	@Override

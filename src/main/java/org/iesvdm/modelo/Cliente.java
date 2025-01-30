@@ -1,9 +1,6 @@
 package org.iesvdm.modelo;
 
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -43,5 +40,9 @@ public class Cliente {
 	@Min(value = 100, message = "Categoría mínima de {value}.")
 	@Max(value = 1000, message = "Categoría máxima de {value}.")
 	private int categoria;
+
+	@Email(message = "Formato de email incorrecto", regexp="^[a-zA-Z0-9._-]+@[a-zA-Z0-9-]+\\.[a-zA-Z.]{2,5}")
+	@NotBlank(message = "Por favor, introduzca email.")
+	private String correo;
 	
 }

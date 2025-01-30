@@ -81,7 +81,8 @@ public class ClienteDAOImpl implements ClienteDAO {
 						rs.getString("apellido1"),
 						rs.getString("apellido2"),
 						rs.getString("ciudad"),
-						rs.getInt("categoría")
+						rs.getInt("categoría"),
+						rs.getString("correo")
 				)
 		);
 
@@ -104,7 +105,8 @@ public class ClienteDAOImpl implements ClienteDAO {
 								rs.getString("apellido1"),
 								rs.getString("apellido2"),
 								rs.getString("ciudad"),
-								rs.getInt("categoría"))
+								rs.getInt("categoría"),
+								rs.getString("correo"))
 						, id
 				);
 
