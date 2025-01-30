@@ -33,6 +33,10 @@
             <label class="form-label text-white" th:text="#{msg.categoria}"></label>
             <input type="text" th:field="*{categoria}" class="form-control" />
         </div>
+
+        <p th:each="err : ${#fields.globalErrors()}" th:utext="${err}"></p>
+
+
     </form>
 </div>
 

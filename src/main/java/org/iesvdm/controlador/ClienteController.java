@@ -2,11 +2,13 @@ package org.iesvdm.controlador;
 
 import java.util.List;
 
+import jakarta.validation.Valid;
 import org.iesvdm.dto.ComercialDTO2;
 import org.iesvdm.modelo.Cliente;
 import org.iesvdm.service.ClienteService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
 
@@ -53,15 +55,22 @@ public class ClienteController {
 	}
 
 	@GetMapping("/clientes/crear") //Al no tener ruta base para el controlador, cada método tiene que tener la ruta completa
-	public String crear(@ModelAttribute ("cliente") Cliente cliente) {
+	public String crear(@ModelAttribute ("cliente") Cliente cliente, Model model) {
 
 		return "crear-cliente";
 	}
 
 	@PostMapping("/clientes/crear")
-	public RedirectView submitCrear(@ModelAttribute("cliente") Cliente cliente) {
+	public RedirectView submitCrear(@Valid @ModelAttribute("cliente") Cliente cliente, BindingResult bindingResult, Model model) {
+
+		if (bindingResult.hasErrors()) {
+			model.addAttribute("cliente", cliente);
+
+			return new RedirectView("/clientes/crear-cliente");
+		}
 
 		clienteService.newCliente(cliente);
+
 		return new RedirectView("/clientes");
 	}
 
