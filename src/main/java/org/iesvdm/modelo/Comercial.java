@@ -22,12 +22,12 @@ public class Comercial {
 	@Size(max = 30, message = "{error.nombre.size.max}")
 	private String nombre;
 
-	@Size(max = 30, message = "Apellido 1 como máximo de {max} caracteres.")
+	@Size(max = 30, message = "{error.apellido1.size.max}")
 	private String apellido1;
 	private String apellido2;
 
-	@DecimalMin(value="0.276", message="La comisión debe de ser al menos {value}")
-	@DecimalMax(value="0.946", message="La comisión no puede ser mayor que {value}")
+	@DecimalMin(value="0.276", message="{error.comision.min}")
+	@DecimalMax(value="0.946", message="{error.comision.max}")
 	private BigDecimal comision;
 
 

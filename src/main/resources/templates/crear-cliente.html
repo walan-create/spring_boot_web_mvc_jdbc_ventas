@@ -45,6 +45,13 @@
                 <li th:each="err : ${#fields.errors('categoria')}" th:text="${err}" class="alert alert-danger" />
             </ul>
         </div>
+        <div class="mb-3">
+            <label class="form-label text-white" th:text="#{msg.correo}"></label>
+            <input type="text" th:field="*{correo}" class="form-control" />
+            <ul th:if="${#fields.hasErrors('correo')}" class="list-unstyled mt-2">
+                <li th:each="err : ${#fields.errors('correo')}" th:text="${err}" class="alert alert-danger" />
+            </ul>
+        </div>
 
         <!--Global error-->
         <div th:if="${#fields.hasGlobalErrors()}">

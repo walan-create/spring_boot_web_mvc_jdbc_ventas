@@ -27,22 +27,22 @@ public class Cliente {
 	private String nombre;
 
 	@NotBlank
-	@Size(max = 30, message = "Apellido 1 como máximo de {max} caracteres.")
+	@Size(max = 30, message = "{error.apellido1.size.max}")
 	private String apellido1;
 
-	@Size(max = 30, message = "Apellido 2 como máximo de {max} caracteres.")
+	@Size(max = 30, message = "{error.apellido2.size.max}")
 	private String apellido2;
 
 	@NotBlank
-	@Size(max = 50, message = "Ciudad como máximo de {max} caracteres.")
+	@Size(max = 50, message = "{error.ciudad.size.max}")
 	private String ciudad;
 
-	@Min(value = 100, message = "Categoría mínima de {value}.")
-	@Max(value = 1000, message = "Categoría máxima de {value}.")
+	@Min(value = 100, message = "{error.categoria.min}")
+	@Max(value = 1000, message = "{error.categoria.max}")
 	private int categoria;
 
-	@Email(message = "Formato de email incorrecto", regexp="^[a-zA-Z0-9._-]+@[a-zA-Z0-9-]+\\.[a-zA-Z.]{2,5}")
-	@NotBlank(message = "Por favor, introduzca email.")
+	@Email(message = "{error.correo.formato}", regexp="^[a-zA-Z0-9._-]+@[a-zA-Z0-9-]+\\.[a-zA-Z.]{2,5}")
+	@NotBlank(message = "{error.correo.blanco}")
 	private String correo;
 	
 }
