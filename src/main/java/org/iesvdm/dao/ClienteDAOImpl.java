@@ -37,8 +37,8 @@ public class ClienteDAOImpl implements ClienteDAO {
 
 		//Desde java15+ se tiene la triple quote """ para bloques de texto como cadenas.
 		String sqlInsert = """
-							INSERT INTO cliente (nombre, apellido1, apellido2, ciudad, categoría,correo) 
-							VALUES  (? , ?, ?, ?, ?, ?)
+							INSERT INTO cliente (nombre, apellido1, apellido2, ciudad, categoría,correo,atributoEjemplo) 
+							VALUES  (? , ?, ?, ?, ?, ?, ?)
 						   """;
 
 		KeyHolder keyHolder = new GeneratedKeyHolder();
@@ -51,7 +51,8 @@ public class ClienteDAOImpl implements ClienteDAO {
 			ps.setString(idx++, cliente.getApellido2());
 			ps.setString(idx++, cliente.getCiudad());
 			ps.setInt(idx++, cliente.getCategoria());
-			ps.setString(idx, cliente.getCorreo());
+			ps.setString(idx++, cliente.getCorreo());
+			ps.setString(idx, cliente.getAtributoEjemplo());
 			return ps;
 		},keyHolder);
 
@@ -83,7 +84,8 @@ public class ClienteDAOImpl implements ClienteDAO {
 						rs.getString("apellido2"),
 						rs.getString("ciudad"),
 						rs.getInt("categoría"),
-						rs.getString("correo")
+						rs.getString("correo"),
+						rs.getString("atributoEjemplo")
 				)
 		);
 
@@ -107,9 +109,9 @@ public class ClienteDAOImpl implements ClienteDAO {
 								rs.getString("apellido2"),
 								rs.getString("ciudad"),
 								rs.getInt("categoría"),
-								rs.getString("correo"))
-						, id
-				);
+								rs.getString("correo"),
+								rs.getString("atributoEjemplo"))
+						, id);
 
 		if (fab != null) {
 			return Optional.of(fab);}
@@ -131,15 +133,19 @@ public class ClienteDAOImpl implements ClienteDAO {
 														apellido2 = ?,
 														ciudad = ?,
 														categoría = ?,
-														correo = ?  
+														correo = ?,
+														atributoEjemplo = ?
 												WHERE id = ?
-										""", cliente.getNombre()
-				, cliente.getApellido1()
-				, cliente.getApellido2()
-				, cliente.getCiudad()
-				, cliente.getCategoria()
-				, cliente.getCorreo()
-				, cliente.getId());
+										""",
+				cliente.getNombre(),
+				cliente.getApellido1(),
+				cliente.getApellido2(),
+				cliente.getCiudad(),
+				cliente.getCategoria(),
+				cliente.getCorreo(),
+				cliente.getAtributoEjemplo(),
+				cliente.getId()
+		);
 
 		log.info("Update de Cliente con {} registros actualizados.", rows);
 

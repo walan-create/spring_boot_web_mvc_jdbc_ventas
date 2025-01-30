@@ -9,8 +9,8 @@ CREATE TABLE cliente (
                          apellido2 VARCHAR(100),
                          ciudad VARCHAR(100),
                          categoría INT UNSIGNED,
-                         correo VARCHAR(100)
-
+                         correo VARCHAR(100),
+                         atributoEjemplo VARCHAR(100)
 );
 
 CREATE TABLE comercial (
@@ -31,16 +31,16 @@ CREATE TABLE pedido (
                         FOREIGN KEY (id_comercial) REFERENCES comercial(id)
 );
 
-INSERT INTO cliente VALUES(1, 'Aarón', 'Rivero', 'Gómez', 'Almería', 100, 'aaron.rivero@empresa.com');
-INSERT INTO cliente VALUES(2, 'Adela', 'Salas', 'Díaz', 'Granada', 200, 'adela.salas@empresa.com');
-INSERT INTO cliente VALUES(3, 'Adolfo', 'Rubio', 'Flores', 'Sevilla', NULL, 'adolfo.rubio@empresa.com');
-INSERT INTO cliente VALUES(4, 'Adrián', 'Suárez', NULL, 'Jaén', 300, 'adrian.suarez@empresa.com');
-INSERT INTO cliente VALUES(5, 'Marcos', 'Loyola', 'Méndez', 'Almería', 200, 'marcos.loyola@empresa.com');
-INSERT INTO cliente VALUES(6, 'María', 'Santana', 'Moreno', 'Cádiz', 100, 'maria.santana@empresa.com');
-INSERT INTO cliente VALUES(7, 'Pilar', 'Ruiz', NULL, 'Sevilla', 300, 'pilar.ruiz@empresa.com');
-INSERT INTO cliente VALUES(8, 'Pepe', 'Ruiz', 'Santana', 'Huelva', 200, 'pepe.ruiz@empresa.com');
-INSERT INTO cliente VALUES(9, 'Guillermo', 'López', 'Gómez', 'Granada', 225, 'guillermo.lopez@empresa.com');
-INSERT INTO cliente VALUES(10, 'Daniel', 'Santana', 'Loyola', 'Sevilla', 125, 'daniel.santana@empresa.com');
+INSERT INTO cliente VALUES(1, 'Aarón', 'Rivero', 'Gómez', 'Almería', 100, 'aaron.rivero@empresa.com', 'Ejemplo1');
+INSERT INTO cliente VALUES(2, 'Adela', 'Salas', 'Díaz', 'Granada', 200, 'adela.salas@empresa.com', 'Ejemplo2');
+INSERT INTO cliente VALUES(3, 'Adolfo', 'Rubio', 'Flores', 'Sevilla', NULL, 'adolfo.rubio@empresa.com', 'Ejemplo3');
+INSERT INTO cliente VALUES(4, 'Adrián', 'Suárez', NULL, 'Jaén', 300, 'adrian.suarez@empresa.com', 'Ejemplo4');
+INSERT INTO cliente VALUES(5, 'Marcos', 'Loyola', 'Méndez', 'Almería', 200, 'marcos.loyola@empresa.com', 'Ejemplo5');
+INSERT INTO cliente VALUES(6, 'María', 'Santana', 'Moreno', 'Cádiz', 100, 'maria.santana@empresa.com', 'Ejemplo6');
+INSERT INTO cliente VALUES(7, 'Pilar', 'Ruiz', NULL, 'Sevilla', 300, 'pilar.ruiz@empresa.com', 'Ejemplo7');
+INSERT INTO cliente VALUES(8, 'Pepe', 'Ruiz', 'Santana', 'Huelva', 200, 'pepe.ruiz@empresa.com', 'Ejemplo8');
+INSERT INTO cliente VALUES(9, 'Guillermo', 'López', 'Gómez', 'Granada', 225, 'guillermo.lopez@empresa.com', 'Ejemplo9');
+INSERT INTO cliente VALUES(10, 'Daniel', 'Santana', 'Loyola', 'Sevilla', 125, 'daniel.santana@empresa.com', 'Ejemplo10');
 
 
 INSERT INTO comercial VALUES(1, 'Daniel', 'Sáez', 'Vega', 0.15);

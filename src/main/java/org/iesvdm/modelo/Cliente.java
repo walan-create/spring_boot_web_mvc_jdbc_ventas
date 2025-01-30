@@ -44,5 +44,7 @@ public class Cliente {
 	@Email(message = "{error.correo.formato}", regexp="^[a-zA-Z0-9._-]+@[a-zA-Z0-9-]+\\.[a-zA-Z.]{2,5}")
 	@NotBlank(message = "{error.correo.blanco}")
 	private String correo;
+
+	String atributoEjemplo;
 	
 }

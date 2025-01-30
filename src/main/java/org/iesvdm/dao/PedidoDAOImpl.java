@@ -9,6 +9,8 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.simple.JdbcClient;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -30,22 +32,21 @@ public class PedidoDAOImpl implements PedidoDAO{
 
     @Override
     public void create(Pedido pedido) {
-        //Para el ejercicio no es necesario el create
 
-//        KeyHolder keyHolder = new GeneratedKeyHolder();
-//
-//        int rowsUpdated = jdbcClient.sql("""
-//				INSERT INTO pedido (nombre, apellido1, apellido2, comisión)
-//				VALUES (?,?,?,?)
-//				""")
-//                .param(pedido.getFecha())
-//                .param(pedido.getTotal())
-//                .param(pedido.getId_cliente())
-//                .param(pedido.getId_comercial())
-//                .update(keyHolder);
-//
-//        pedido.setId(keyHolder.getKey().intValue());
-//        log.info("Insertados {} registros",rowsUpdated);
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+
+        int rowsUpdated = jdbcClient.sql("""
+				INSERT INTO pedido (total, fecha, id_cliente, id_comercial)
+				VALUES (?,?,?,?)
+				""")
+                .param(pedido.getTotal())
+                .param(pedido.getFecha())
+                .param(pedido.getId_cliente())
+                .param(pedido.getId_comercial())
+                .update(keyHolder);
+
+        pedido.setId(keyHolder.getKey().intValue());
+        log.info("Insertados {} registros",rowsUpdated);
     }
 
     @Override

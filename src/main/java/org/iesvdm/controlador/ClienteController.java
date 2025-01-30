@@ -1,10 +1,12 @@
 package org.iesvdm.controlador;
 
+import java.util.Arrays;
 import java.util.List;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Size;
 import org.iesvdm.dto.ComercialDTO2;
+import org.iesvdm.modelo.ClaseEjemplo;
 import org.iesvdm.modelo.Cliente;
 import org.iesvdm.service.ClienteService;
 import org.springframework.stereotype.Controller;
@@ -55,8 +57,20 @@ public class ClienteController {
 		return "detalle-cliente";
 	}
 
-	@GetMapping("/clientes/crear") //Al no tener ruta base para el controlador, cada método tiene que tener la ruta completa
-	public String crear(@ModelAttribute ("cliente") Cliente cliente, Model model) {
+	@GetMapping("/clientes/crear")
+	public String crear(@ModelAttribute("cliente") Cliente cliente, Model model) {
+
+		//Esto es para probar la opcion desplegable
+		//*Esta lista se llenaria de otras cosas por medio de un service*
+		List<ClaseEjemplo> opciones = Arrays.asList(
+				new ClaseEjemplo("Clase1", "Atributo1"),
+				new ClaseEjemplo("Clase2", "Atributo2"),
+				new ClaseEjemplo("Clase3", "Atributo3")
+				);
+
+		model.addAttribute("opciones", opciones);
+
+		//-------------------------------------------
 
 		return "crear-cliente";
 	}

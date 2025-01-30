@@ -54,7 +54,7 @@ public class SpringBootWebMvcJdbcVentasApplication implements CommandLineRunner{
 		}
 		
 		// Como es un cliente nuevo a persistir, id a 0
-		Cliente clienteNew = new Cliente(0, "Jose M", "Martín", null, "Málaga", 100,"JoseM@gmail.com");
+		Cliente clienteNew = new Cliente(0, "Jose M", "Martín", null, "Málaga", 100,"JoseM@gmail.com","Atributo ejemplar 11");
 		
 		//create actualiza el id
 		clienteDAO.create(clienteNew);

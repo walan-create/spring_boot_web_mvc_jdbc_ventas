@@ -8,11 +8,17 @@
 <body class="bg-secondary">
 
 <div class="container mt-5">
+
+    <!-- Campo Formulario -->
     <form th:action="@{/clientes/crear}" th:object="${cliente}" method="post">
         <div class="d-flex justify-content-between align-items-center mb-4">
+            <!-- titulo -->
             <h1 class="text-white" th:text="#{msg.crear_client}"></h1>
+            <!-- Boton crear -->
             <button class="btn btn-primary btn-lg" th:text="#{msg.crear}"></button>
         </div>
+
+        <!-- Campo nombre -->
         <div class="mb-3">
             <label class="form-label text-white" th:text="#{msg.nombre}"></label>
             <input type="text" th:field="*{nombre}" class="form-control" />
@@ -20,6 +26,8 @@
                 <li th:each="err : ${#fields.errors('nombre')}" th:text="${err}" class="alert alert-danger" />
             </ul>
         </div>
+
+        <!-- Campo apellido 1 -->
         <div class="mb-3">
             <label class="form-label text-white" th:text="#{msg.apellido1}"></label>
             <input type="text" th:field="*{apellido1}" class="form-control" />
@@ -27,10 +35,14 @@
                 <li th:each="err : ${#fields.errors('apellido1')}" th:text="${err}" class="alert alert-danger" />
             </ul>
         </div>
+
+        <!-- Campo apellido 2 -->
         <div class="mb-3">
             <label class="form-label text-white" th:text="#{msg.apellido2}"></label>
             <input type="text" th:field="*{apellido2}" class="form-control" />
         </div>
+
+        <!-- Campo ciudad -->
         <div class="mb-3">
             <label class="form-label text-white" th:text="#{msg.ciudad}"></label>
             <input type="text" th:field="*{ciudad}" class="form-control" />
@@ -38,6 +50,8 @@
                 <li th:each="err : ${#fields.errors('ciudad')}" th:text="${err}" class="alert alert-danger" />
             </ul>
         </div>
+
+        <!-- Campo correo -->
         <div class="mb-3">
             <label class="form-label text-white" th:text="#{msg.categoria}"></label>
             <input type="text" th:field="*{categoria}" class="form-control" />
@@ -45,12 +59,27 @@
                 <li th:each="err : ${#fields.errors('categoria')}" th:text="${err}" class="alert alert-danger" />
             </ul>
         </div>
+
+        <!-- Campo correo -->
         <div class="mb-3">
             <label class="form-label text-white" th:text="#{msg.correo}"></label>
             <input type="text" th:field="*{correo}" class="form-control" />
             <ul th:if="${#fields.hasErrors('correo')}" class="list-unstyled mt-2">
                 <li th:each="err : ${#fields.errors('correo')}" th:text="${err}" class="alert alert-danger" />
             </ul>
+        </div>
+
+        <!-- Select dropdown -->
+        <div class="mb-3">
+            <label class="form-label text-white">Opcion Ejemplo:</label>
+            <select th:field="*{atributoEjemplo}" class="form-select">
+                <!-- th:value = El valor que se pasa y tiene que coincidir -->
+                <!-- th:text = Lo que se ve -->
+                <option th:each="opcion : ${opciones}"
+                        th:value="${opcion.atributoAPasar}"
+                        th:text="${opcion.nombreClase}">
+                </option>
+            </select>
         </div>
 
         <!--Global error-->
